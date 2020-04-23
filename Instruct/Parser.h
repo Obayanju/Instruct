@@ -28,7 +28,7 @@ public:
 	IdentifierNode* Identifier();
 	IntegerNode* Integer();
 	DeclarationStatementNode* DeclarationStatement();
-	AssignmentStatementNode* AssignmentStatement();
+	StatementNode* AssignmentStatement();
 	CoutStatementNode* CoutStatement();
 	IfStatementNode* IfStatement();
 	WhileStatementNode* WhileStatement();

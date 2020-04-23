@@ -172,27 +172,36 @@ DeclarationStatementNode::~DeclarationStatementNode()
 	//MSG("delete declaration statement node");
 }
 
-CoutStatementNode::CoutStatementNode(ExpressionNode* e)
+CoutStatementNode::CoutStatementNode()
 {
-	mExNode = e;
-	//MSG("init CoutStatementNode");
 }
 
 void CoutStatementNode::Interpret()
 {
-	int eval = mExNode->Evaluate();
-	cout << eval << endl;
+	for (int i = 0; i < mExNode.size(); i++) {
+		int eval = mExNode[i]->Evaluate();
+		cout << eval;
+	}
 }
 
 void CoutStatementNode::Code(InstructionsClass& machineCode)
 {
-	mExNode->CodeEvaluate(machineCode);
-	machineCode.PopAndWrite();
+	for (int i = 0; i < mExNode.size(); i++) {
+		mExNode[i]->CodeEvaluate(machineCode);
+		machineCode.PopAndWrite();
+	}
+}
+
+void CoutStatementNode::AddExpression(ExpressionNode* en)
+{
+	mExNode.push_back(en);
 }
 
 CoutStatementNode::~CoutStatementNode()
 {
-	delete mExNode;
+	for (int i = 0; i < mExNode.size(); i++) {
+		delete mExNode[i];
+	}
 	MSG("CoutNode Deleting");
 }
 
@@ -547,4 +556,60 @@ void OrNode::CodeEvaluate(InstructionsClass& machineCode)
 	mLeft->CodeEvaluate(machineCode);
 	mRight->CodeEvaluate(machineCode);
 	machineCode.PopPopLessEqualPush();
+}
+
+PlusEqualNode::PlusEqualNode(IdentifierNode* in, ExpressionNode* en)
+{
+	mIn = in;
+	mEn = en;
+}
+
+PlusEqualNode::~PlusEqualNode()
+{
+	delete mIn;
+	delete mEn;
+	MSG("PlusEqualNode Deleting");
+}
+
+void PlusEqualNode::Interpret()
+{
+	int eval = mEn->Evaluate() + mIn->Evaluate();
+	mIn->SetValue(eval);
+}
+
+void PlusEqualNode::Code(InstructionsClass& machineCode)
+{
+	int index = mIn->GetIndex();
+	mIn->CodeEvaluate(machineCode);
+	mEn->CodeEvaluate(machineCode);
+	machineCode.PopPopAddPush();
+	machineCode.PopAndStore(index);
+}
+
+MinusEqualNode::MinusEqualNode(IdentifierNode* in, ExpressionNode* en)
+{
+	mIn = in;
+	mEn = en;
+}
+
+MinusEqualNode::~MinusEqualNode()
+{
+	delete mIn;
+	delete mEn;
+	MSG("MinusEqualNode Deleting");
+}
+
+void MinusEqualNode::Interpret()
+{
+	int eval = mIn->Evaluate() - mEn->Evaluate();
+	mIn->SetValue(eval);
+}
+
+void MinusEqualNode::Code(InstructionsClass& machineCode)
+{
+	int index = mIn->GetIndex();
+	mIn->CodeEvaluate(machineCode);
+	mEn->CodeEvaluate(machineCode);
+	machineCode.PopPopSubPush();
+	machineCode.PopAndStore(index);
 }

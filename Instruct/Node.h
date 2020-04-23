@@ -28,7 +28,9 @@ class ExpressionNode;
 class CoutStatementNode;
 class BinaryOperatorNode;
 class PlusNode;
+class PlusEqualNode;
 class MinusNode;
+class MinusEqualNode;
 class TimesNode;
 class DivideNode;
 class LessNode;
@@ -120,11 +122,12 @@ private:
 
 class CoutStatementNode : public StatementNode {
 public:
-	CoutStatementNode(ExpressionNode* e);
+	CoutStatementNode();
 	~CoutStatementNode();
 	void Interpret();
 	void Code(InstructionsClass& machineCode);
-	ExpressionNode* mExNode;
+	void AddExpression(ExpressionNode* en);
+	vector<ExpressionNode*> mExNode;
 };
 
 class IfStatementNode : public StatementNode {
@@ -195,11 +198,31 @@ public:
 	void CodeEvaluate(InstructionsClass& machineCode);
 };
 
+class PlusEqualNode :public StatementNode {
+public:
+	PlusEqualNode(IdentifierNode* in, ExpressionNode* en);
+	~PlusEqualNode();
+	void Interpret();
+	void Code(InstructionsClass& machineCode);
+	IdentifierNode* mIn;
+	ExpressionNode* mEn;
+};
+
 class MinusNode : public BinaryOperatorNode {
 public:
 	MinusNode(ExpressionNode* left, ExpressionNode* right);
 	int Evaluate();
 	void CodeEvaluate(InstructionsClass& machineCode);
+};
+
+class MinusEqualNode :public StatementNode {
+public:
+	MinusEqualNode(IdentifierNode* in, ExpressionNode* en);
+	~MinusEqualNode();
+	void Interpret();
+	void Code(InstructionsClass& machineCode);
+	IdentifierNode* mIn;
+	ExpressionNode* mEn;
 };
 
 class TimesNode : public BinaryOperatorNode {

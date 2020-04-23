@@ -1,8 +1,6 @@
 void main()
 {
- int sum;
- sum = 35 + 400;
- if (sum <= 500){
-    cout << sum * 100;
- }
+int x;
+x = 5;
+ cout << 10 << x+2 << endl << endl << x*3+1 << endl ;
 }

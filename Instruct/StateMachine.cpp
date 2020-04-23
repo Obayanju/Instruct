@@ -94,6 +94,8 @@ StateMachineClass::StateMachineClass()
 	mLegalMoves[EXCLAMATION_STATE][EQUAL_CHAR] = NOTEQUAL_STATE;
 	mLegalMoves[HALF_AND_STATE][AND_CHAR] = AND_STATE;
 	mLegalMoves[HALF_OR_STATE][OR_CHAR] = OR_STATE;
+	mLegalMoves[PLUS_STATE][EQUAL_CHAR] = PLUS_EQUAL_STATE;
+	mLegalMoves[MINUS_STATE][EQUAL_CHAR] = MINUS_EQUAL_STATE;
 
 
 	mLegalMoves[START_STATE][EOF_CHAR] = EOF_STATE;
@@ -114,6 +116,8 @@ StateMachineClass::StateMachineClass()
 	mCorrespondingTokenTypes[EQUAL_STATE] = EQUAL_TOKEN;
 	mCorrespondingTokenTypes[NOTEQUAL_STATE] = NOTEQUAL_TOKEN;
 	mCorrespondingTokenTypes[PLUS_STATE] = PLUS_TOKEN;
+	mCorrespondingTokenTypes[PLUS_EQUAL_STATE] = PLUS_EQUAL_TOKEN;
+	mCorrespondingTokenTypes[MINUS_EQUAL_STATE] = MINUS_EQUAL_TOKEN;
 	mCorrespondingTokenTypes[LPAREN_STATE] = LPAREN_TOKEN;
 	mCorrespondingTokenTypes[RPAREN_STATE] = RPAREN_TOKEN;
 	mCorrespondingTokenTypes[SEMICOLON_STATE] = SEMICOLON_TOKEN;
