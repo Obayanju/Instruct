@@ -1,0 +1,8 @@
+void main()
+{
+ int sum;
+ sum = 35 + 400;
+ if (sum <= 500){
+    cout << sum * 100;
+ }
+}
